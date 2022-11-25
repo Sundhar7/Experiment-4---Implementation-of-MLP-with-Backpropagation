@@ -119,6 +119,55 @@ Normalize our dataset.
 
 ## PROGRAM 
 
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+data=pd.read_csv("/content/IRIS (1).csv")
+data.head()
+
+name=["sepal_length","sepal_width","petal_length","petal_width"]
+x=data.iloc[:,0:4]
+y=data.select_dtypes(include=[object])
+x.head()
+y.head()
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+data['species']=label_encoder.fit_transform(data['species'])
+data['species'].unique()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.20)
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+scaler.fit(x_train)
+x_train=scaler.transform(x_train)
+x_test=scaler.transform(x_test)
+
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.neural_network import MLPClassifier
+mlp=MLPClassifier(hidden_layer_sizes=(10,10,10),max_iter=1000)
+mlp.fit(x_train,y_train.values.ravel())
+predictions=mlp.predict(x_test)
+print(predictions)
+
+print(confusion_matrix(y_test,predictions))
+print(classification_report(y_test,predictions))
+
 ## OUTPUT 
+![image](https://user-images.githubusercontent.com/83111884/203892252-25562e7a-9a4e-4861-86e9-d267f297dc7c.png)
+
+![image](https://user-images.githubusercontent.com/83111884/203892270-6af795f5-8714-43af-90e1-73bdf08d79a3.png)
+
+![image](https://user-images.githubusercontent.com/83111884/203892293-c2fdac6f-d91c-4f5a-b78a-8a0116134057.png)
+
+![image](https://user-images.githubusercontent.com/83111884/203892314-878411d1-c5f0-4372-a557-0a3c5b9287c0.png)
+
+![image](https://user-images.githubusercontent.com/83111884/203892319-0056f80f-cb39-4652-841a-fe8ea2b92a67.png)
+
 
 ## RESULT
+
+Thus Implementation-of-MLP-with-Backpropagation problem is executed successfully.
+
